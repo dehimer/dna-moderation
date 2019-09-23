@@ -8,11 +8,11 @@ export default class Server {
 	start(serverip){
 		const socket = io('http://'+serverip);
 
-		socket.on('auth:check', ()=>{
+		socket.on('auth:check', () => {
 			this.can.emit('auth:check');
 		});
 
-		socket.on('auth:success', ()=>{
+		socket.on('auth:success', () => {
 			this.can.emit('auth:success');
 		});
 
@@ -28,10 +28,6 @@ export default class Server {
 			this.can.emit('answers:new', newAnswer);
 		});
 
-
-		// this.can.on('auth:submit', (pw) => {
-		// 	socket.emit()
-		// })
 		this.can.on('server:send', args => {
 			const { message, data } = args;
 			socket.emit(message, data);
