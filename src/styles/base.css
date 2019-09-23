@@ -1,0 +1,125 @@
+/* bold */
+@font-face {
+  font-family: 'SF-UI-Display-Black';
+  src: url('/fonts/bold/SF-UI-Display-Black.eot');
+  src: url('/fonts/bold/SF-UI-Display-Black.woff2') format('woff2'),
+       url('/fonts/bold/SF-UI-Display-Black.eot?#iefix') format('embedded-opentype');
+  src: url('/fonts/bold/SFUIDisplay-Black.woff') format('woff'),
+       url('/fonts/bold/SFUIDisplay-Black.ttf') format('truetype'),
+       url('/fonts/bold/SFUIDisplay-Black.svg#SFUIDisplay-Black') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* regular */
+@font-face {
+  font-family: 'SF-UI-Display-Regular';
+  src: url('/fonts/regular/SF-UI-Display-Regular.eot');
+  src: url('/fonts/regular/SF-UI-Display-Regular.woff2') format('woff2'),
+       url('/fonts/regular/SF-UI-Display-Regular.eot?#iefix') format('embedded-opentype');
+  src: url('/fonts/regular/SFUIDisplay-Regular.woff') format('woff'),
+       url('/fonts/regular/SFUIDisplay-Regular.ttf') format('truetype'),
+       url('/fonts/regular/SFUIDisplay-Regular.svg#SFUIDisplay-Regular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* thin */
+@font-face {
+  font-family: 'SF-UI-Display-Thin';
+  src: url('/fonts/thin/SF-UI-Display-Thin.eot');
+  src: url('/fonts/thin/SF-UI-Display-Thin.woff2') format('woff2'),
+       url('/fonts/thin/SF-UI-Display-Thin.eot?#iefix') format('embedded-opentype');
+  src: url('/fonts/thin/SFUIDisplay-Thin.woff') format('woff'),
+       url('/fonts/thin/SFUIDisplay-Thin.ttf') format('truetype'),
+       url('/fonts/thin/SFUIDisplay-Thin.svg#SFUIDisplay-Thin') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* light */
+@font-face {
+  font-family: 'SF-UI-Display-Light';
+  src: url('/fonts/light/SF-UI-Display-Light.eot');
+  src: url('/fonts/light/SF-UI-Display-Light.woff2') format('woff2'),
+       url('/fonts/light/SF-UI-Display-Light.eot?#iefix') format('embedded-opentype');
+  src: url('/fonts/light/SFUIDisplay-Light.woff') format('woff'),
+       url('/fonts/light/SFUIDisplay-Light.ttf') format('truetype'),
+       url('/fonts/light/SFUIDisplay-Light.svg#SFUIDisplay-Light') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
+
+html, body {
+	padding: 0px;
+	margin: 0px;
+	overflow: hidden;
+}
+
+#root {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	font-family: 'SF-UI-Display-Light';
+}
+
+
+@keyframes bganimation
+{
+	0% {
+		background-position: 
+			-100% -100%,
+			200% 200%,
+			-100% 200%,
+			200% -100%;
+	}
+	50% {
+		background-position: 
+			150% 100%,
+			-200% 100%,
+			100% 0%,
+			0% 100%;
+	}	
+	100% {
+		background-position: 
+			-100% -100%,
+			200% 200%,
+			-100% 200%,
+			200% -100%;
+	}
+}
+
+
+html {
+	background: 
+		radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%), /* niebieski */
+		#08314d;
+	background-repeat: 
+		no-repeat, 
+		no-repeat, 
+		no-repeat;
+	background-size: 
+		900px 900px,
+		900px 900px,
+		900px 900px;
+	background-attachment: fixed;
+
+	animation:bganimation 100s infinite;
+}
+body { height: 9999px;}
+
+
+::-webkit-input-placeholder {color:white;}
+::-moz-placeholder          {color:white;}/* Firefox 19+ */
+:-moz-placeholder           {color:white;}/* Firefox 18- */
+:-ms-input-placeholder      {color:white;}
+
+table td {
+	text-align:center; 
+    vertical-align:middle;
+}

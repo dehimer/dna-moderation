@@ -1,0 +1,8 @@
+/.idea
+/node_modules
+/npm-debug.log
+/server/config.js
+/server/client/*.js
+/server/client/*.css
+/server/client/*.map
+/answers
