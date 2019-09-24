@@ -6,3 +6,4 @@
 /server/client/*.css
 /server/client/*.map
 /answers
+/.DS_Store
