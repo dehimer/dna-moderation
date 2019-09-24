@@ -25,52 +25,26 @@ export default class Question {
 	render(){
 		$.get('/question', (question) => {
 
-			const markup = `<table class="question">
-				<tr>
-					<td>
-						<table class="question-form">
-							<tr>
-								<td>
-									<div class="question-form__question">
-										<nobr>
-											${question}
-										</nobr>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="question-form__answer">
-										<input class="question-form__answer-input" type="text" placeholder="Ответ в несколько слов"></input>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="question-form__answer">
-										<input class="question-form__answer-submit" type="button" value="Отправить"></input>
-									</div>
-								</td>
-							</tr>
-						</table>
-						<table class="question-result question-result--hide">
-							<tr>
-								<td>
-									<div class="question-result__text question-result__text--big">
-										Спасибо за ответ!
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<div class="question-result__text question-result__text--last">
-										Ваше слово стало частью<br>инсталляции
-									</div>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>	
+			const markup = `<div class="question">
+				<div class="question-form">
+					<div class="question-form__question">
+						${question}
+					</div>
+					<div class="question-form__answer">
+						<input class="question-form__answer-input" type="text" placeholder="Ответ в несколько слов" />
+					</div>
+					<div class="question-form__answer">
+						<input class="question-form__answer-submit" type="button" value="Отправить" />
+					</div>
+				</div>
+				<div class="question-result question-result--hide">
+					<div class="question-result__text question-result__text--big">
+						Спасибо за ответ!
+					</div>
+					<div class="question-result__text question-result__text--last">
+						Ваше слово стало частью<br>инсталляции
+					</div>
+				</div>
 			</div>`;
 
 			this.rootEl.append(markup);

@@ -70,7 +70,7 @@ app.get(/^\/twitch$/, (req, res) => {
 
 /* queries */
 app.get(/^\/question$/, (req, res) => {
-	res.send(config.question || '?');
+	res.send(config.question);
 });
 
 let newAnswerEmit = function() {};
