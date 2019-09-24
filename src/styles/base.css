@@ -72,21 +72,21 @@ html, body {
 @keyframes bganimation
 {
 	0% {
-		background-position: 
+		background-position:
 			-100% -100%,
 			200% 200%,
 			-100% 200%,
 			200% -100%;
 	}
 	50% {
-		background-position: 
+		background-position:
 			150% 100%,
 			-200% 100%,
 			100% 0%,
 			0% 100%;
-	}	
+	}
 	100% {
-		background-position: 
+		background-position:
 			-100% -100%,
 			200% 200%,
 			-100% 200%,
@@ -96,14 +96,13 @@ html, body {
 
 
 html {
-	background: 
-		radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%), /* niebieski */
-		#08314d;
-	background-repeat: 
-		no-repeat, 
-		no-repeat, 
+	background:
+		radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%), /* niebieski */ #00124d;
+	background-repeat:
+		no-repeat,
+		no-repeat,
 		no-repeat;
-	background-size: 
+	background-size:
 		900px 900px,
 		900px 900px,
 		900px 900px;
@@ -120,6 +119,6 @@ body { height: 9999px;}
 :-ms-input-placeholder      {color:white;}
 
 table td {
-	text-align:center; 
+	text-align:center;
     vertical-align:middle;
 }

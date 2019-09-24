@@ -19,10 +19,10 @@ GRADIENT_COLOR_3 = GRADIENT_COLOR_1;
 
 BUBBLES_LENGTH = 10;
 BUBBLE_VY_MIN = 0.1;
-BUBBLE_VY_MAX = 2;
-BUBBLE_RADIUS_MIN = 1;
-BUBBLE_RADIUS_MAX = 100;
-BUBBLE_ALPHA_MAX = 0.05;
+BUBBLE_VY_MAX = 10;
+BUBBLE_RADIUS_MIN = 0.1;
+BUBBLE_RADIUS_MAX = 2;
+BUBBLE_ALPHA_MAX = 0.5;
 
 createjs.Ticker.framerate = 30;
 
@@ -94,4 +94,4 @@ Main = (function() {
 var main, stage;
 stage = new createjs.Stage('background');
 main = new Main(stage);
-main.run()
+main.run();
