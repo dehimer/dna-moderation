@@ -7,23 +7,20 @@ const can = new CAN();
 import './styles/base.css';
 import './styles/admin.css';
 
-import Auth from './components/auth';
 import Server from './components/server';
+import Auth from './components/auth';
 import Answers from './components/answers';
-// import Logo from './components/logo/index.js'
 
 
 let rootEl = $('#root');
 
-const server = new Server({can});
-/*const auth = */new Auth({rootEl, can});
-/*const answers = */new Answers({rootEl, can});
-// const logo = new Logo({rootEl});
+const server = new Server({ can });
+new Auth({ rootEl, can });
+new Answers({ rootEl, can });
 
 
-$.get('/serverip', serverip => {
+$.get('/serverip', (serverip) => {
 	server.start(serverip);
-	// logo.render();
 });
 
 document.ontouchmove = function(event){

@@ -28,8 +28,7 @@ export default class Server {
 			this.can.emit('answers:new', newAnswer);
 		});
 
-		this.can.on('server:send', args => {
-			const { message, data } = args;
+		this.can.on('server:send', ({ message, data }) => {
 			socket.emit(message, data);
 		});
 	}

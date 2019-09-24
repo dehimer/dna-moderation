@@ -6,7 +6,6 @@ const http = require('http');
 const Datastore = require('nedb');
 const answersDb = new Datastore({ filename: 'answers', autoload: true });
 
-
 const express = require('express');
 
 const config  = require('./config');
@@ -47,7 +46,12 @@ app.use(express.static(__dirname + '/client'));
 
 app.get(/^\/$/, (req, res) => {
 	if (req.query.message) {
-		const answer = { id:+(new Date()), text: req.query.message, sent: false };
+		const answer = {
+			id: +(new Date()),
+			text: req.query.message,
+			sent: false
+		};
+
 		newAnswerEmit(answer);
 		answersDb.insert(answer);
 		res.send({ status: 'ok' });
@@ -75,7 +79,12 @@ app.get(/^\/answer$/, (req, res) => {
 	// console.log(req.query.text);
 	const answerText = req.query.text;
 	if(answerText){
-		const answer = {id:+(new Date()), text:answerText, sent:false};
+		const answer = {
+			id: +(new Date()),
+			text: answerText,
+			sent: false
+		};
+
 		newAnswerEmit(answer);
 		answersDb.insert(answer);
 		res.send('answerReceived');
@@ -115,17 +124,15 @@ io.on('connection', (socket) => {
 	socket.emit('auth:check');
 
 	socket.on('auth:submit', (pw) => {
-		isadmin = config.admin_password == pw;
+		isadmin = (config.admin_password === pw);
 		if(isadmin){
 			socket.emit('auth:success');
 		}
 	});
 
 	socket.on('answers:all', () => {
-		// console.log('answers:all');
-		if(isadmin) {
-			answersDb.find({}).sort({ id: -1 }).exec((err, allAnswers)=>{
-				// console.log(allAnswers);
+		if (isadmin) {
+			answersDb.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
 				socket.emit('answers:all', allAnswers);
 			});
 		}
@@ -133,10 +140,10 @@ io.on('connection', (socket) => {
 
 	socket.on('answers:send', (answerId) => {
 		answersDb.findOne({ id: answerId }, (err, answer) => {
-
 			const send = () => {
 				answersDb.update({
-					id: answerId
+					id: answerId,
+					sent: false
 				}, {
 					$set: { sent: true }
 				}, {}, (err, numUpdated) => {
@@ -146,14 +153,12 @@ io.on('connection', (socket) => {
 				})
 			};
 
-			let sent = false;
 			if (!config.waittargethost) {
 				send();
-				sent = true;
 			}
 
 			request(config.targethost+'?message='+encodeURIComponent(answer.text), function (error, response) {
-				if (!error && response.statusCode == 200 && !sent) {
+				if (!error && response.statusCode == 200) {
 					send();
 				}
 			});

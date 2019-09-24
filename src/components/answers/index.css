@@ -1,28 +1,42 @@
 .answers {
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 }
 
 .answers__list {
-	margin: 0px auto;
+	margin: 0 auto;
 	color: white;
 	/*background-color: rgba(0,0,0,0.1);*/
+	padding-bottom: 15vh;
 }
 
 
 .answers__item {
+	display: flex;
+	align-items: center;
+	width: 100vw;
+	margin: 5px 0;
+	box-sizing: border-box;
 	color: white;
 	background-color: rgba(255,255,255, 0.1)
 }
 
+.answers__item-time {
+	width: 20vw;
+	min-width: 20vw;
+}
+
 .answers__item-text {
+	width: 50vw;
+	min-width: 50vw;
 	padding-left: 7px;
 	text-align: left;
-	min-width: 400px;
 	color: white;
 }
 
 .answers__send {
+	width: 30vw;
+	min-width: 30vw;
 	padding: 5px;
 	font-size: 15px;
 	font-family: 'SF-UI-Display-Light';

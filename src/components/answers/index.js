@@ -8,25 +8,30 @@ export default class Answers {
 		this.can = args.can;
 		this.rootEl = args.rootEl;
 
-		this.can.on('auth:success', ()=>{
-			this.can.emit('server:send', {message:'answers:all'});
+		this.can.on('auth:success', () => {
+			this.can.emit('server:send', { message:'answers:all' });
 		});
 
-		this.can.on('answers:all', (answers=[])=> {
+		this.can.on('answers:all', (answers=[]) => {
 			this.answers = answers;
 			this.render();
+
+			setTimeout(function () {
+				window.scrollTo(0,0 );
+			}, 100);
 		});
 
-		this.can.on('answers:sent', answerId => {
+		this.can.on('answers:sent', (answerId) => {
 			this.sent(answerId);
 		});
 
-		this.can.on('answers:new', newAnswer => {
+		this.can.on('answers:new', (newAnswer) => {
 			this.answers.unshift(newAnswer);
 			this.addNew(newAnswer);
 		});
 	}
-	send (id) {
+
+	send(id) {
 		this.can.emit('server:send', { message: 'answers:send', data: id });
 	}
 
@@ -35,7 +40,8 @@ export default class Answers {
 	}
 
 	addNew (answer) {
-		this.listEl.find('.answers__header').after(this.genItemMarkup(answer));
+		this.listEl.find(`.answers__item[data-id="${answer.id}"]`).remove();
+		this.listEl.prepend(this.genItemMarkup(answer));
 		this.bindSendClick(this.listEl.find(`.answers__item[data-id="${answer.id}"]`));
 		this.iscroll.refresh();
 	}
@@ -43,36 +49,34 @@ export default class Answers {
 	genItemMarkup(answer) {
 		const {id, text, sent} = answer;
 
-
 		const date 	= new Date(id);
 		let hour	= date.getHours();
 		let minute  = date.getMinutes();
+
 		if(hour.toString().length == 1) {
 			hour = '0'+hour;
 		}
+
 		if(minute.toString().length == 1) {
 			minute = '0'+minute;
 		}
+
 		const time = hour+':'+minute;
 
 		return `
-			<tr class="answers__item" data-id="${id}">
-				<td>
+			<div class="answers__item" data-id="${id}">
+				<div class="answers__item-time" >
 					${time}
-				</td>
-				<td>
-					<div class="answers__item-text">
-						${text}
-					</div>
-				</td>
-				<td>
-					<input
-						class="answers__send ${sent?'answers__send--blocked':''}"
-						type="button"
-						value="Отправить"
-					/>
-				</td>
-			</tr>
+				</div>
+				<div class="answers__item-text">
+					${text}
+				</div>
+				<input
+					class="answers__send ${sent?'answers__send--blocked':''}"
+					type="button"
+					value="Отправить"
+				/>
+			</div>
 		`
 	}
 
@@ -97,33 +101,16 @@ export default class Answers {
 		}).join('');
 
 		const markup = `
-			<table class='answers'>
-				<tr>
-					<td>
-						<div style="height:100vh;overflow:hidden;">
-						<table class='answers__list'>
-							<tr class="answers__header">
-								<td>
-									Время
-								</td>
-								<td style="text-align:left;">
-									Фраза
-								</td>
-								<td>
-									Действие
-								</td>
-							</tr>
-
-							${answersMarkup}
-						</table>
-						</div>
-					</td>
-				</tr>
-			</table>
+			<div class='answers'>
+				<div style="height:100vh; overflow:hidden;">
+					<div class='answers__list'>
+						${answersMarkup}
+					</div>
+				</div>
+			</div>
 		`;
 
 		this.rootEl.append(markup);
-		console.log(this.answers);
 
 		this.blockEl = this.rootEl.find('.answers');
 		this.listEl = this.blockEl.find('.answers__list');

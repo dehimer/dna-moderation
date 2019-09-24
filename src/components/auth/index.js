@@ -1,32 +1,30 @@
-// import $ from 'jquery';
-
 import './index.css'
 
 export default class Auth {
 	constructor(args) {
 		this.can = args.can;
 		this.rootEl = args.rootEl;
-		console.log(this.rootEl.length);
 
-		this.can.on('auth:check', ()=>{
+		this.can.on('auth:check', () => {
 			this.render();
+
 			setTimeout(function () {
 				window.scrollTo(0,0 );
 			}, 100);
 		});
-		this.can.on('auth:success', ()=>{
+
+		this.can.on('auth:success', () => {
 			this.blockEl && this.blockEl.remove();
 		});
 	}
 
 	submit(pw) {
-		if(pw){
+		if (pw) {
 			this.can.emit('server:send', { message: 'auth:submit', data: pw });
 		}
 	}
 
 	render(){
-
 		const markup = `<div class='auth'>
 			<div class="auth__form-greeting">
 				Приветствую Администратор!
