@@ -45,12 +45,12 @@
 }
 
 .stars {
-    background:#00124d url(/nightsky/stars.png) repeat top center;
+    background:#030416 url(/nightsky/stars.png) repeat top center;
     z-index:0;
 }
 
 .twinkling{
-    background:transparent url(/nightsky/twinkling3.png) repeat top center;
+    background:transparent url(/nightsky/twinkling4.png) repeat top center;
     z-index:1;
 
     -moz-animation:move-twink-back 200s linear infinite;
