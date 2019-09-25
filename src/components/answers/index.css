@@ -24,6 +24,7 @@
 .answers__item-time {
 	width: 20vw;
 	min-width: 20vw;
+	font-family: Circe-Light, serif;
 }
 
 .answers__item-text {
@@ -32,6 +33,7 @@
 	padding-left: 7px;
 	text-align: left;
 	color: white;
+	font-family: Circe-Light, serif;
 }
 
 .answers__send {
@@ -39,7 +41,7 @@
 	min-width: 30vw;
 	padding: 5px;
 	font-size: 15px;
-	font-family: 'SF-UI-Display-Light';
+	font-family: Circe-Regular, serif;
 	background-color: #c5cf40;
 	color: white;
 	border: none;

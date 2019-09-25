@@ -26,12 +26,15 @@ export default class Question {
 		$.get('/question', (question) => {
 
 			const markup = `<div class="question">
+				<div class="question-logo">
+					<img class="logo" src="/logo.png"/>
+				</div>
 				<div class="question-form">
 					<div class="question-form__question">
 						${question}
 					</div>
 					<div class="question-form__answer">
-						<input class="question-form__answer-input" type="text" placeholder="Ответ в несколько слов" />
+						<input class="question-form__answer-input" type="text" placeholder="Ваш ответ" />
 					</div>
 					<div class="question-form__answer">
 						<input class="question-form__answer-submit" type="button" value="Отправить" />
@@ -52,7 +55,6 @@ export default class Question {
 			this.blockEl = this.rootEl.find('.question');
 			this.formEl = this.blockEl.find('.question-form');
 			this.answerEl = this.formEl.find('.question-form__answer-input');
-			this.answerEl.focus();
 
 			this.resultEl = this.blockEl.find('.question-result');
 			this.greetingEl = this.resultEl.find('.question-result__text');

@@ -61,7 +61,7 @@
 }
 
 .clouds{
-    background:transparent url(/nightsky/clouds3.png) repeat top center;
+    background:transparent url(/nightsky/clouds2.png) repeat top center;
     z-index:3;
 
     -moz-animation:move-clouds-back 200s linear infinite;

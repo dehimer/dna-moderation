@@ -1,12 +1,12 @@
 import './index.css'
 
-export default class Question {
+export default class Logo {
 	constructor (args) {
 		this.rootEl = args.rootEl;
 	}
-	render(){
+	render() {
 
-		const markup = '<img class="logo" src="/logo.png"/>';
+		const markup = '<img class="logo" src="/logoo.png"/>';
 
 		this.rootEl.append(markup);
 	}

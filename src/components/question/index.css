@@ -1,11 +1,19 @@
 .question {
 	display: flex;
-	justify-content: center;
+	flex-direction: column;
 	align-items: center;
 	box-sizing: border-box;
 	width: 100vw;
 	height: 100vh;
 	color: white;
+}
+
+.question-logo {
+	margin-bottom: 10vh;
+}
+
+.question-logo img {
+	width: 20vw;
 }
 
 .question-form {
@@ -24,10 +32,11 @@
 }
 
 .question-form__question {
-	font-size: 40px;
+	font-size: 20px;
 	text-align: left;
 	width: 100%;
 	margin-bottom: 20px;
+	font-family: Circe-Regular, serif;
 }
 
 .question-form__answer {
@@ -40,7 +49,7 @@
 	width: 100vw;
 	padding: 10px;
 	font-size: 20px;
-	font-family: Helvetica;
+	font-family: Circe-Light, serif;
 	color: white;
 	background-color: rgba(255,255,255,0.1);
 	border: 1px solid rgba(255,255,255,0.3);
@@ -48,12 +57,12 @@
 }
 
 .question-form__answer-submit {
-	width: 250px;
-	max-width: 250px;
-	font-size: 29px;
-	border-radius: 30px;
-	padding: 10px;
-	font-family: Helvetica;
+	width: 150px;
+	max-width: 150px;
+	font-size: 20px;
+	border-radius: 20px;
+	padding: 5px;
+	font-family: Circe-Regular, serif;
 	text-transform: uppercase;
 	background: linear-gradient(45deg, #489c9a, #f2cf37);
 	color: white;
@@ -71,16 +80,17 @@
 }
 
 .question-result__text {
-	font-family: Helvetica;
+	font-family: Circe-Regular, serif;
 	font-size: 30px;
 	text-align: center;
 }
 
 .question-result__text--big {
-	font-family: Helvetica;
+	font-family: Circe-Regular, serif;
 	font-size: 40px;
 }
 
 .question-result__text--last {
 	margin-top: 25px;
+	font-family: Circe-Light, serif;
 }

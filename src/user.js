@@ -7,7 +7,7 @@ const can = new CAN();
 import './styles/base.css';
 import './styles/user.css';
 
-import Question from './components/question/index.js'
+import Question from './components/question'
 import NightSky from './components/nightsky';
 
 let rootEl = $('#root');
