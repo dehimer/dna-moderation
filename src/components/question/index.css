@@ -31,12 +31,12 @@
 }
 
 .question-form__answer {
-	text-align: left;
-	margin-bottom: 10px;
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
 }
 
 .question-form__answer-input {
-
 	width: 100vw;
 	padding: 10px;
 	font-size: 20px;
@@ -48,11 +48,13 @@
 }
 
 .question-form__answer-submit {
-	width: 100vw;
+	width: 65vw;
+	max-width: 65vw;
+	font-size: 29px;
+	border-radius: 30px;
 	padding: 10px;
-	font-size: 20px;
 	font-family: 'SF-UI-Display-Light';
-	background-color: #c5cf40;
+	background: linear-gradient(45deg, #489c9a, #f2cf37);
 	color: white;
 	border: none;
 	box-sizing: border-box;
