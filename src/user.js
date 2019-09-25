@@ -17,8 +17,3 @@ const question = new Question({ can, rootEl });
 
 nightsky.render();
 question.render();
-
-
-document.ontouchmove = function(event) {
-    event.preventDefault();
-};
