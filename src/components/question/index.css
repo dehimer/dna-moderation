@@ -40,7 +40,7 @@
 	width: 100vw;
 	padding: 10px;
 	font-size: 20px;
-	font-family: 'SF-UI-Display-Light';
+	font-family: Helvetica;
 	color: white;
 	background-color: rgba(255,255,255,0.1);
 	border: 1px solid rgba(255,255,255,0.3);
@@ -48,12 +48,13 @@
 }
 
 .question-form__answer-submit {
-	width: 65vw;
-	max-width: 65vw;
+	width: 250px;
+	max-width: 250px;
 	font-size: 29px;
 	border-radius: 30px;
 	padding: 10px;
-	font-family: 'SF-UI-Display-Light';
+	font-family: Helvetica;
+	text-transform: uppercase;
 	background: linear-gradient(45deg, #489c9a, #f2cf37);
 	color: white;
 	border: none;
@@ -70,13 +71,13 @@
 }
 
 .question-result__text {
-	font-family: 'SF-UI-Display-Light';
+	font-family: Helvetica;
 	font-size: 30px;
 	text-align: center;
 }
 
 .question-result__text--big {
-	font-family: 'SF-UI-Display-Light';
+	font-family: Helvetica;
 	font-size: 40px;
 }
 
