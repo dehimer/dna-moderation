@@ -8,7 +8,7 @@ const answersDb = new Datastore({ filename: 'answers', autoload: true });
 
 const express = require('express');
 
-import config from './config';
+const config  = require('./config.js');
 
 const app = express();
 
