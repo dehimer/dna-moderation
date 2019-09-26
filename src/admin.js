@@ -23,6 +23,7 @@ new Answers({ rootEl, can });
 nightsky.render();
 
 $.get('/serverip', (serverip) => {
+	console.log(`serverip ${serverip}`);
 	server.start(serverip);
 });
 
