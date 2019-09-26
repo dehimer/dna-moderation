@@ -1,6 +1,6 @@
 {
-  "name": "dna",
-  "version": "1.0.0",
+  "name": "dna-moderation",
+  "version": "1.1.0",
   "description": "Part of an application",
   "main": "server/run.js",
   "scripts": {
