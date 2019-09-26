@@ -83,6 +83,8 @@
 
     "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
-    "postcss-nested": "^1.0.0"
+    "postcss-nested": "^1.0.0",
+
+    "extract-text-webpack-plugin": "^1.0.1"
   }
 }
