@@ -6,7 +6,7 @@ export default class Server {
 	}
 
 	start(serverip){
-		const socket = io('https://'+serverip);
+		const socket = io(serverip);
 
 		socket.on('auth:check', () => {
 			this.can.emit('auth:check');
