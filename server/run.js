@@ -19,7 +19,7 @@ const config = {
 	twitchchannel: 'silvername',
 	port: 1999,
 	dburl: 'mongodb://heroku_sw4gsd0z:v8oabg1ritrggiltt7cq2pvsd1@ds141320.mlab.com:41320/heroku_sw4gsd0z',
-	dbname: 'dna'
+	dbname: 'kursor'
 };
 
 // Use connect method to connect to the server
