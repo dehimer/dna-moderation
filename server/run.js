@@ -95,7 +95,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 	let newAnswerEmit = function() {};
 
 	app.get(/^\/answer$/, (req, res) => {
-		// console.log(req.query.text);
+		console.log('/answer');
 		const answerText = req.query.text;
 		if(answerText){
 			const answer = {
@@ -105,7 +105,9 @@ MongoClient.connect(config.dburl, function(err, client) {
 			};
 
 			newAnswerEmit(answer);
-			asnwersCollection.insertOne(answer);
+			asnwersCollection.insertOne(answer)
+				.then(result => console.log(`Successfully inserted item with _id: ${result.insertedId}`))
+				.catch(err => console.error(`Failed to insert item: ${err}`));
 			res.send('answerReceived');
 		}
 	});
