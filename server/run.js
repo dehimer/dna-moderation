@@ -105,9 +105,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 			};
 
 			newAnswerEmit(answer);
-			asnwersCollection.insertOne(answer)
-				.then(result => console.log(`Successfully inserted item with _id: ${result.insertedId}`))
-				.catch(err => console.error(`Failed to insert item: ${err}`));
+			asnwersCollection.insertOne(answer);
 			res.send('answerReceived');
 		}
 	});
@@ -171,12 +169,12 @@ MongoClient.connect(config.dburl, function(err, client) {
 				sent: false
 			}, {
 				$set: { sent: true }
-			}, {}, (err, numUpdated) => {
+			}, {}, (err, res) => {
 				console.log('err');
 				console.log(err);
 				console.log('numUpdated');
-				console.log(numUpdated);
-				if(numUpdated === 1){
+				console.log(res.nModified);
+				if(res.nModified === 1){
 					io.emit('answers:sent', answerId);
 				}
 			})
