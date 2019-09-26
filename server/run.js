@@ -2,7 +2,6 @@ require("babel-register");
 
 const request = require('request');
 const http = require('http');
-const path = require('path');
 
 const Datastore = require('nedb');
 const answersDb = new Datastore({ filename: 'answers', autoload: true });
@@ -11,8 +10,8 @@ const express = require('express');
 
 // const config  = require(path.join(__dirname, './config.js'));
 const config = {
-	targethost:	'http://192.168.1.66:3000/',
-	waittargethost: false,
+	// targethost:	'http://192.168.1.66:3000/',
+	// waittargethost: false,
 	admin_password:	'123',
 	question: 'Что для вас является ориентиром?',
 	showtwitch: false,
@@ -163,15 +162,19 @@ io.on('connection', (socket) => {
 				})
 			};
 
+			/*
 			if (!config.waittargethost) {
 				send();
 			}
+			*/
 
+			/*
 			request(config.targethost+'?message='+encodeURIComponent(answer.text), function (error, response) {
 				if (!error && response.statusCode == 200) {
 					send();
 				}
 			});
+			*/
 		})
 	})
 });
