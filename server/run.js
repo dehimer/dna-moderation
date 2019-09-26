@@ -2,13 +2,14 @@ require("babel-register");
 
 const request = require('request');
 const http = require('http');
+const path = require('path');
 
 const Datastore = require('nedb');
 const answersDb = new Datastore({ filename: 'answers', autoload: true });
 
 const express = require('express');
 
-const config  = require('./config.js');
+const config  = require(path.join(__dirname, './config.js'));
 
 const app = express();
 
