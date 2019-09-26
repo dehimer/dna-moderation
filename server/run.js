@@ -169,12 +169,8 @@ MongoClient.connect(config.dburl, function(err, client) {
 				sent: false
 			}, {
 				$set: { sent: true }
-			}, {}, (err, res) => {
-				console.log('err');
-				console.log(err);
-				console.log('numUpdated');
-				console.log(res.nModified);
-				if(res.nModified === 1){
+			}, {}, (err) => {
+				if(!err){
 					io.emit('answers:sent', answerId);
 				}
 			})
