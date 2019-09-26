@@ -65,6 +65,11 @@
     "nedb": "^1.8.0",
     "node-static": "^0.7.7",
     "passport": "^0.2.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+
+    "webpack": "^1.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-merge": "^0.13.0"
   }
 }
