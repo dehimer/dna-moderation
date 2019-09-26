@@ -20,6 +20,9 @@
   "bugs": {
     "url": "https://github.com/dehimer/dna/issues"
   },
+  "engines": {
+    "node": "10.x"
+  },
   "homepage": "https://github.com/dehimer/dna#readme",
   "devDependencies": {
     "autoprefixer": "^6.3.6",
