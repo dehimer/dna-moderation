@@ -105,7 +105,7 @@ app.get(/^\/twitchchannel$/, (req, res) => {
 });
 
 app.get(/^\/serverip$/, (req, res) => {
-	res.send(req.headers.host);
+	res.send(req.protocol + '://' + req.headers.host);
 });
 
 
