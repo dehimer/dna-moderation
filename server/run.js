@@ -107,7 +107,7 @@ app.get('*', (req, res) => {
 });
 
 const server = new http.Server(app);
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || config.port || 3000;
 
 server.listen(PORT);
 

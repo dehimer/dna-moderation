@@ -42,10 +42,7 @@ export default class Question {
 				</div>
 				<div class="question-result question-result--hide">
 					<div class="question-result__text question-result__text--big">
-						Спасибо за ответ!
-					</div>
-					<div class="question-result__text question-result__text--last">
-						Ваше слово стало частью<br>инсталляции
+						Ваш ответ принят!
 					</div>
 				</div>
 			</div>`;
