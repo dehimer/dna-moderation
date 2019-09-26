@@ -150,15 +150,21 @@ MongoClient.connect(config.dburl, function(err, client) {
 		});
 
 		socket.on('answers:all', () => {
+			console.log('answers:all');
 			if (isadmin) {
 				asnwersCollection.find({}).sort({ id: -1 }).toArray((err, allAnswers) => {
+					console.log('allAnswers');
+					console.log(allAnswers);
 					socket.emit('answers:all', allAnswers);
 				});
 			}
 		});
 
 		socket.on('answers:send', (answerId) => {
+			console.log('answers:send '+answerId);
 			asnwersCollection.findOne({ id: answerId }, (err, answer) => {
+				console.log('answer');
+				console.log(answer);
 				const send = () => {
 					asnwersCollection.updateOne({
 						id: answerId,
