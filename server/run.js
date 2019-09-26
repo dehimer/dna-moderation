@@ -151,7 +151,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 
 		socket.on('answers:all', () => {
 			if (isadmin) {
-				asnwersCollection.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
+				asnwersCollection.find({}).sort({ id: -1 }).toArray((err, allAnswers) => {
 					socket.emit('answers:all', allAnswers);
 				});
 			}
