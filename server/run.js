@@ -19,15 +19,15 @@ const config = {
 	twitchchannel: 'silvername',
 	port: 1999,
 	dburl: 'mongodb://heroku_sw4gsd0z:v8oabg1ritrggiltt7cq2pvsd1@ds141320.mlab.com:41320/heroku_sw4gsd0z',
-	dbname: 'answers'
+	dbname: 'dna'
 };
 
 // Use connect method to connect to the server
 MongoClient.connect(config.dburl, function(err, client) {
 	console.log('Connected successfully to ' + config.dbname + ' server');
 
-	const client = client.db(config.dbname);
-	const asnwersCollection = db.collection('documents');
+	const db = client.db(config.dbname);
+	const asnwersCollection = db.collection('answers');
 
 	const app = express();
 
