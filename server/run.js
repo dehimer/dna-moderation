@@ -138,11 +138,13 @@ MongoClient.connect(config.dburl, function(err, client) {
 	};
 
 	io.on('connection', (socket) => {
+		console.log('connection');
 		let isadmin = false;
 
 		socket.emit('auth:check');
 
 		socket.on('auth:submit', (pw) => {
+			console.log('auth:submit');
 			isadmin = (config.admin_password === pw);
 			if(isadmin){
 				socket.emit('auth:success');
@@ -160,26 +162,32 @@ MongoClient.connect(config.dburl, function(err, client) {
 			}
 		});
 
+		const send = (answerId) => {
+			console.log('send '+answerId);
+			asnwersCollection.updateOne({
+				id: answerId,
+				sent: false
+			}, {
+				$set: { sent: true }
+			}, {}, (err, numUpdated) => {
+				console.log('err');
+				console.log(err);
+				console.log('numUpdated');
+				console.log(numUpdated);
+				if(numUpdated === 1){
+					io.emit('answers:sent', answerId);
+				}
+			})
+		};
+
 		socket.on('answers:send', (answerId) => {
 			console.log('answers:send '+answerId);
 			asnwersCollection.findOne({ id: answerId }, (err, answer) => {
 				console.log('answer');
 				console.log(answer);
-				const send = () => {
-					asnwersCollection.updateOne({
-						id: answerId,
-						sent: false
-					}, {
-						$set: { sent: true }
-					}, {}, (err, numUpdated) => {
-						if(numUpdated === 1){
-							io.emit('answers:sent', answerId);
-						}
-					})
-				};
 
         if (!config.waittargethost) {
-          send();
+          send(answerId);
         }
 
 				/*
