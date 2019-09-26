@@ -72,7 +72,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 			};
 
 			newAnswerEmit(answer);
-			asnwersCollection.insert(answer);
+			asnwersCollection.insertOne(answer);
 			res.send({ status: 'ok' });
 		} else {
 			res.sendFile(__dirname + '/client/user.html');
@@ -105,7 +105,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 			};
 
 			newAnswerEmit(answer);
-			asnwersCollection.insert(answer);
+			asnwersCollection.insertOne(answer);
 			res.send('answerReceived');
 		}
 	});
@@ -160,7 +160,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 		socket.on('answers:send', (answerId) => {
 			asnwersCollection.findOne({ id: answerId }, (err, answer) => {
 				const send = () => {
-					asnwersCollection.update({
+					asnwersCollection.updateOne({
 						id: answerId,
 						sent: false
 					}, {
