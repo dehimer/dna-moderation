@@ -22,6 +22,8 @@
 }
 
 .answers__item-time {
+    padding-left: 5px;
+    box-sizing: border-box;
 	width: 20vw;
 	min-width: 20vw;
 	font-family: Circe-Light, serif;

@@ -13,6 +13,8 @@ export default class Answers {
 		});
 
 		this.can.on('answers:all', (answers=[]) => {
+			console.log('answers:all');
+			console.log(answers);
 			this.answers = answers;
 			this.render();
 
