@@ -9,7 +9,16 @@ const answersDb = new Datastore({ filename: 'answers', autoload: true });
 
 const express = require('express');
 
-const config  = require(path.join(__dirname, './config.js'));
+// const config  = require(path.join(__dirname, './config.js'));
+const config = {
+	targethost:	'http://192.168.1.66:3000/',
+	waittargethost: false,
+	admin_password:	'123',
+	question: 'Что для вас является ориентиром?',
+	showtwitch: false,
+	twitchchannel: 'silvername',
+	port: 1999
+};
 
 const app = express();
 
