@@ -26,7 +26,8 @@ const config = {
 MongoClient.connect(config.dburl, function(err, client) {
 	console.log('Connected successfully to ' + config.dbname + ' server');
 
-	const answersDb = client.db(config.dbname);
+	const client = client.db(config.dbname);
+	const asnwersCollection = db.collection('documents');
 
 	const app = express();
 
@@ -71,7 +72,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 			};
 
 			newAnswerEmit(answer);
-			answersDb.insert(answer);
+			asnwersCollection.insert(answer);
 			res.send({ status: 'ok' });
 		} else {
 			res.sendFile(__dirname + '/client/user.html');
@@ -104,7 +105,7 @@ MongoClient.connect(config.dburl, function(err, client) {
 			};
 
 			newAnswerEmit(answer);
-			answersDb.insert(answer);
+			asnwersCollection.insert(answer);
 			res.send('answerReceived');
 		}
 	});
@@ -150,16 +151,16 @@ MongoClient.connect(config.dburl, function(err, client) {
 
 		socket.on('answers:all', () => {
 			if (isadmin) {
-				answersDb.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
+				asnwersCollection.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
 					socket.emit('answers:all', allAnswers);
 				});
 			}
 		});
 
 		socket.on('answers:send', (answerId) => {
-			answersDb.findOne({ id: answerId }, (err, answer) => {
+			asnwersCollection.findOne({ id: answerId }, (err, answer) => {
 				const send = () => {
-					answersDb.update({
+					asnwersCollection.update({
 						id: answerId,
 						sent: false
 					}, {
