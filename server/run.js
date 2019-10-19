@@ -47,7 +47,7 @@ app.get(/^\/$/, (req, res) => {
 });
 
 app.get(/^\/words$/, (req, res) => {
-	res.sendFile(__dirname + '/client/admin.html');
+	res.sendFile(__dirname + '/client/words.html');
 });
 
 /* queries */
@@ -98,11 +98,15 @@ io.on('connection', (socket) => {
 
 	socket.on('words:all', () => {
 		console.log('words:all');
-		wordsDb.find({}).sort({ id: -1 }).toArray((err, allWords) => {
+		wordsDb.find({}).sort({ ts: -1 }).exec((err, allWords) => {
 			console.log('allWords');
 			console.log(allWords);
 			socket.emit('words:all', allWords || []);
 		});
+
+		// asnwersCollection.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
+		// 	socket.emit('answers:all', allAnswers);
+		// });
 	});
 
 	socket.on('word:send', (wordId) => {

@@ -14,12 +14,13 @@ import Answers from './components/answers';
 let rootEl = $('#root');
 
 const server = new Server({ can });
-new Answers({ rootEl, can });
-
 
 $.get('/serverip', (serverip) => {
 	console.log(`serverip ${serverip}`);
-	server.start(serverip);
+	server.start(serverip, () => {
+		console.log('cb');
+		new Answers({ rootEl, can });
+	});
 });
 
 document.ontouchmove = function(event){

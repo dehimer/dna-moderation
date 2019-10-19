@@ -5,18 +5,21 @@ export default class Server {
 		this.can = args.can;
 	}
 
-	start(serverip){
+	start(serverip, cb){
 		const socket = io(serverip);
 
-		socket.on('answers:all', (answers) => {
-			this.can.emit('answers:all', answers);
+		cb && socket.on('connect', cb);
+
+		socket.on('words:all', (words) => {
+			this.can.emit('words:all', words);
 		});
 
-		socket.on('answers:new', (newAnswer) => {
-			this.can.emit('answers:new', newAnswer);
+		socket.on('words:new', (newWord) => {
+			this.can.emit('words:new', newWord);
 		});
 
 		this.can.on('server:send', ({ message, data }) => {
+			console.log('server:send '+message);
 			socket.emit(message, data);
 		});
 	}

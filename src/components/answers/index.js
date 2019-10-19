@@ -8,14 +8,12 @@ export default class Answers {
 		this.can = args.can;
 		this.rootEl = args.rootEl;
 
-		this.can.on('auth:success', () => {
-			this.can.emit('server:send', { message:'answers:all' });
-		});
+		this.can.emit('server:send', { message: 'words:all' });
 
-		this.can.on('answers:all', (answers=[]) => {
-			console.log('answers:all');
-			console.log(answers);
-			this.answers = answers;
+		this.can.on('words:all', (words=[]) => {
+			console.log('words:all');
+			console.log(words);
+			this.words = words;
 			this.render();
 
 			setTimeout(function () {
@@ -23,58 +21,53 @@ export default class Answers {
 			}, 100);
 		});
 
-		this.can.on('answers:sent', (answerId) => {
-			this.sent(answerId);
-		});
-
-		this.can.on('answers:new', (newAnswer) => {
-			this.answers.unshift(newAnswer);
-			this.addNew(newAnswer);
+		this.can.on('words:new', (newWord) => {
+			this.words.unshift(newWord);
+			this.addNew(newWord);
 		});
 	}
 
 	send(id) {
-		this.can.emit('server:send', { message: 'answers:send', data: id });
+		this.can.emit('server:send', { message: 'words:send', data: id });
 	}
 
-	sent (id) {
-		this.blockEl.find(`.answers__item[data-id="${id}"]`).find('.answers__send').addClass('answers__send--blocked');
-	}
-
-	addNew (answer) {
-		this.listEl.find(`.answers__item[data-id="${answer.id}"]`).remove();
-		this.listEl.prepend(this.genItemMarkup(answer));
-		this.bindSendClick(this.listEl.find(`.answers__item[data-id="${answer.id}"]`));
+	addNew (word) {
+		this.listEl.find(`.words__item[data-id="${word._id}"]`).remove();
+		this.listEl.prepend(this.genItemMarkup(word));
+		this.bindSendClick(this.listEl.find(`.words__item[data-id="${word._id}"]`));
 		this.iscroll.refresh();
 	}
 
-	genItemMarkup(answer) {
-		const {id, text, sent} = answer;
+	genItemMarkup(word) {
+		const { _id, ts, word: text, vector } = word;
 
-		const date 	= new Date(id);
+		const date 	= new Date(ts);
 		let hour	= date.getHours();
 		let minute  = date.getMinutes();
 
-		if(hour.toString().length == 1) {
+		if(hour.toString().length === 1) {
 			hour = '0'+hour;
 		}
 
-		if(minute.toString().length == 1) {
+		if(minute.toString().length === 1) {
 			minute = '0'+minute;
 		}
 
 		const time = hour+':'+minute;
 
 		return `
-			<div class="answers__item" data-id="${id}">
-				<div class="answers__item-time" >
+			<div class="words__item" data-id="${_id}">
+				<div class="words__item-time" >
 					${time}
 				</div>
-				<div class="answers__item-text">
+				<div class="words__item-text">
 					${text}
 				</div>
+				<div class="words__item-vector">
+					${vector}
+				</div>
 				<input
-					class="answers__send ${sent?'answers__send--blocked':''}"
+					class="words__send"
 					type="button"
 					value="Отправить"
 				/>
@@ -83,30 +76,30 @@ export default class Answers {
 	}
 
 	bindSendClick(itemsEl) {
-		itemsEl.find('.answers__send').bind('click', (e) => {
+		itemsEl.find('.words__send').bind('click', (e) => {
 
 			const buttonEl = $(e.currentTarget);
-			if(buttonEl.hasClass('answers__send--blocked')){
+			if(buttonEl.hasClass('words__send--blocked')){
 				return;
 			}
 
-			const itemEl = buttonEl.closest('.answers__item');
-			const answerId = itemEl.data('id');
+			const itemEl = buttonEl.closest('.words__item');
+			const wordId = itemEl.data('id');
 
-			this.send(answerId);
+			this.send(wordId);
 		});
 	}
 
 	render() {
-		const answersMarkup = this.answers.map(answer => {
-			return this.genItemMarkup(answer)
+		const wordsMarkup = this.words.map(word => {
+			return this.genItemMarkup(word)
 		}).join('');
 
 		const markup = `
-			<div class='answers'>
+			<div class='words'>
 				<div style="height:100vh; overflow:hidden;">
-					<div class='answers__list'>
-						${answersMarkup}
+					<div class='words__list'>
+						${wordsMarkup}
 					</div>
 				</div>
 			</div>
@@ -114,14 +107,14 @@ export default class Answers {
 
 		this.rootEl.append(markup);
 
-		this.blockEl = this.rootEl.find('.answers');
-		this.listEl = this.blockEl.find('.answers__list');
+		this.blockEl = this.rootEl.find('.words');
+		this.listEl = this.blockEl.find('.words__list');
 
 		this.iscroll = new IScroll(this.listEl.parent()[0], {
 			mouseWheel: true,
 			scrollbars: true
 		});
 
-		this.bindSendClick(this.listEl.find('.answers__item'));
+		this.bindSendClick(this.listEl.find('.words__item'));
 	}
 }
