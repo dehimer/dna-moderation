@@ -58,17 +58,22 @@ app.post(/^\/word/, (req, res) => {
 	const { word, vector } = req.query;
 
 	if (word && !isNaN(vector*1)) {
-		const newWord = {
+		const newWords = word.split(' ').filter(w => w).map((word) => ({
 			ts: +(new Date()),
 			word,
 			vector
-		};
+		}));
 
-		wordsDb.insert(newWord, (err, insertedWord) => {
-			console.log('insertedWord');
-			console.log(insertedWord);
-			newWordEmit(insertedWord);
-			res.send('wordReceived');
+		console.log('newWords:');
+		console.log(newWords);
+
+		wordsDb.insert(newWords, (err, insertedWords) => {
+			console.log('insertedWords');
+			console.log(insertedWords);
+			res.send('wordsReceived');
+			for (const insertedWord of insertedWords) {
+				newWordEmit(insertedWord);
+			}
 		})
 	}
 });
