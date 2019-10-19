@@ -5,7 +5,7 @@ const path = require('path');
 const http = require('http');
 
 const Datastore = require('nedb');
-const wordsDb = new Datastore({ filename: 'words', autoload: true });
+const wordsDb = new Datastore({ filename: './db/words', autoload: true });
 
 const express = require('express');
 
@@ -64,10 +64,12 @@ app.post(/^\/word/, (req, res) => {
 			vector
 		};
 
-		wordsDb.insert(newWord)
-			.then(({ insertedId }) => newWordEmit({ _id: insertedId, ...newWord }));
-
-		res.send('wordReceived');
+		wordsDb.insert(newWord, (err, insertedWord) => {
+			console.log('insertedWord');
+			console.log(insertedWord);
+			newWordEmit(insertedWord);
+			res.send('wordReceived');
+		})
 	}
 });
 

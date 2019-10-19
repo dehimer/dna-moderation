@@ -5,6 +5,6 @@
 /server/client/*.js
 /server/client/*.css
 /server/client/*.map
-/answers
+/db
 .DS_Store
 **/.DS_Store

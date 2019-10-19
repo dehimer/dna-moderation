@@ -5,6 +5,7 @@
 	box-sizing: border-box;
 	width: 100vw;
 	height: 100%;
+	background-color: black;
 	color: white;
 }
 
@@ -73,6 +74,10 @@
 	box-sizing: border-box;
 }
 
+.question-form__submit[disabled] {
+	opacity: 0.5;
+}
+
 .question-result {
 	margin: 0 auto;
 	text-align: center;
@@ -86,6 +91,7 @@
 	font-family: Circe-Regular, serif;
 	font-size: 30px;
 	text-align: center;
+	padding-top: 20px;
 }
 
 .question-result__text--big {
