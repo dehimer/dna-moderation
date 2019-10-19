@@ -42,13 +42,13 @@
 	font-family: Circe-Regular, serif;
 }
 
-.question-form__answer {
+.question-form__input-wrapper {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 20px;
 }
 
-.question-form__answer-input {
+.question-form__input {
 	width: 100vw;
 	padding: 10px;
 	font-size: 20px;
@@ -59,7 +59,7 @@
 	box-sizing: border-box;
 }
 
-.question-form__answer-submit {
+.question-form__submit {
 	width: 150px;
 	max-width: 150px;
 	font-size: 20px;

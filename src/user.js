@@ -8,12 +8,9 @@ import './styles/base.css';
 import './styles/user.css';
 
 import Question from './components/question'
-import NightSky from './components/nightsky';
 
 let rootEl = $('#root');
 
-const nightsky = new NightSky({ target: $('body')});
 const question = new Question({ can, rootEl });
 
-nightsky.render();
 question.render();

@@ -8,55 +8,51 @@ export default class Question {
 	}
 
 	submit () {
-		const answer = this.answerEl.val().substr(0, 30);
+		const word = this.wordEl.val();
+		const vector = this.vectorEl.val()*1;
 
-		if(!answer){
+		if(!word || isNaN(vector)){
 			return;
 		}
 
-		$.get('/answer?text='+answer, ()=>{
+		$.post('/word?word='+word+'&vector='+vector, () => {
 			this.formEl.addClass('question-form--hide');
 			this.resultEl.removeClass('question-result--hide');
-
-			this.can.emit('question:answered');
 		});
 	}
 
 	render(){
-		$.get('/question', (question) => {
-
-			const markup = `<div class="question">
-				<div class="question-logo">
-					<img class="logo" src="/logo.png"/>
+		const markup = `<div class="question">
+			<div class="question-form">
+				<div class="question-form__question">
+					Ваше слово
 				</div>
-				<div class="question-form">
-					<div class="question-form__question">
-						${question}
-					</div>
-					<div class="question-form__answer">
-						<input class="question-form__answer-input" type="text" placeholder="Ваш ответ" />
-					</div>
-					<div class="question-form__answer">
-						<input class="question-form__answer-submit" type="button" value="Отправить" />
-					</div>
+				<div class="question-form__input-wrapper">
+					<input class="question-form__input word" type="text" placeholder="Слово" />
 				</div>
-				<div class="question-result question-result--hide">
-					<div class="question-result__text question-result__text--big">
-						Ваш ответ принят!
-					</div>
+				<div class="question-form__input-wrapper">
+					<input class="question-form__input vector" type="text" placeholder="Вектор" />
 				</div>
-			</div>`;
+				<div class="question-form__input-wrapper">
+					<input class="question-form__submit" type="button" value="Отправить" />
+				</div>
+			</div>
+			<div class="question-result question-result--hide">
+				<div class="question-result__text question-result__text--big">
+					Ваш ответ принят!
+				</div>
+			</div>
+		</div>`;
 
-			this.rootEl.append(markup);
+		this.rootEl.append(markup);
 
-			this.blockEl = this.rootEl.find('.question');
-			this.formEl = this.blockEl.find('.question-form');
-			this.answerEl = this.formEl.find('.question-form__answer-input');
+		this.blockEl = this.rootEl.find('.question');
+		this.formEl = this.blockEl.find('.question-form');
+		this.wordEl = this.formEl.find('.question-form__input.word');
+		this.vectorEl = this.formEl.find('.question-form__input.vector');
 
-			this.resultEl = this.blockEl.find('.question-result');
-			this.greetingEl = this.resultEl.find('.question-result__text');
+		this.resultEl = this.blockEl.find('.question-result');
 
-			this.formEl.find('.question-form__answer-submit').bind('click', ::this.submit);
-		})
+		this.formEl.find('.question-form__submit').bind('click', ::this.submit);
 	}
 }

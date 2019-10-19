@@ -8,20 +8,8 @@ export default class Server {
 	start(serverip){
 		const socket = io(serverip);
 
-		socket.on('auth:check', () => {
-			this.can.emit('auth:check');
-		});
-
-		socket.on('auth:success', () => {
-			this.can.emit('auth:success');
-		});
-
 		socket.on('answers:all', (answers) => {
 			this.can.emit('answers:all', answers);
-		});
-
-		socket.on('answers:sent', (answerId) => {
-			this.can.emit('answers:sent', answerId);
 		});
 
 		socket.on('answers:new', (newAnswer) => {
