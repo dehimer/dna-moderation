@@ -155,7 +155,13 @@ io.on('connection', (socket) => {
 		console.log('words:update');
 		console.log(word);
 
-		wordsDb.update({ _id: word._id }, { word: word.word, vector: word.vector }, {}, (err, updateResult) => {
+		wordsDb.update({
+			_id: word._id
+		}, {
+			ts: +(new Date()),
+			word: word.word,
+			vector: word.vector
+		}, {}, (err, updateResult) => {
 			console.log('updateResult');
 			console.log(updateResult);
 
