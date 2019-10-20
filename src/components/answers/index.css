@@ -41,8 +41,8 @@
 }
 
 .words__item-vector {
-	width: 25vw;
-	min-width: 25vw;
+	width: 10vw;
+	min-width: 10vw;
 	padding-left: 7px;
 	text-align: left;
 	color: white;
@@ -62,9 +62,7 @@
 	flex: 1;
 }
 
-.words__send,.words-whole-vector__send {
-	width: 30vw;
-	min-width: 30vw;
+.words__button {
 	padding: 5px;
 	font-size: 15px;
 	font-family: Circe-Regular, serif;
@@ -73,6 +71,17 @@
 	border: none;
 	box-sizing: border-box;
 	cursor: pointer;
+}
+
+.words__send,.words-whole-vector__send {
+	width: 30vw;
+	min-width: 30vw;
+}
+
+.words__edit {
+	width: 15vw;
+	min-width: 15vw;
+	margin-right: 5px;
 }
 
 .words__send--blocked {

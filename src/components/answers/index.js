@@ -49,7 +49,7 @@ export default class Answers {
 					${vector}
 				</div>
 				<input
-					class="words-whole-vector__send"
+					class="words__button words-whole-vector__send"
 					data-idx="${vector}"
 					type="button"
 					value="Отправить весь вектор"
@@ -88,7 +88,13 @@ export default class Answers {
 				</div>
 				<input
 				 	data-id="${_id}"
-					class="words__send"
+					class="words__button words__edit"
+					type="button"
+					value="Редактировать"
+				/>
+				<input
+				 	data-id="${_id}"
+					class="words__button words__send"
 					type="button"
 					value="Отправить"
 				/>
@@ -113,6 +119,14 @@ export default class Answers {
 			const vectorIdx = buttonEl.data('idx');
 			console.log(vectorIdx);
 			this.sendVector(vectorIdx);
+		})
+	}
+
+	bindEditClick(el) {
+		el.bind('click', (e) => {
+			const buttonEl = $(e.currentTarget);
+			const wordId = buttonEl.data('id');
+			console.log(`edit ${wordId} word`);
 		})
 	}
 
@@ -153,6 +167,7 @@ export default class Answers {
 		});
 
 		this.bindSendClick(this.listEl.find('.words__send'));
+		this.bindEditClick(this.listEl.find('.words__edit'));
 		this.bindSendVectorClick(this.listEl.find('.words-whole-vector__send'));
 	}
 }

@@ -122,9 +122,12 @@ io.on('connection', (socket) => {
 			console.log(words);
 
 			request(config.targethost+'?message='+encodeURIComponent(words.map(w => w.word).join(' '))+'&vector='+vector, function (error, response) {
-				console.log(response.statusCode);
-				console.log('error');
-				console.log(error);
+				if (error) {
+					console.log('error');
+					console.log(error);
+				} else if (response.statusCode) {
+					console.log(response.statusCode);
+				}
 			});
 		});
 	});
@@ -137,11 +140,13 @@ io.on('connection', (socket) => {
 			console.log('vector');
 			console.log(vector);
 
-
 			request(config.targethost+'?message='+encodeURIComponent(word)+'&vector='+vector, function (error, response) {
-				console.log(response.statusCode);
-				console.log('error');
-				console.log(error);
+				if (error) {
+					console.log('error');
+					console.log(error);
+				} else if (response.statusCode) {
+					console.log(response.statusCode);
+				}
 			});
 		})
 	});
