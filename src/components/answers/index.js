@@ -26,7 +26,13 @@ export default class Answers {
 	}
 
 	send(id) {
+		console.log(`send ${id}`);
 		this.can.emit('server:send', { message: 'words:send', data: id });
+	}
+
+	sendVector(idx) {
+		console.log(`sendVector ${idx}`);
+		this.can.emit('server:send', { message: 'vector:send', data: idx });
 	}
 
 	addNew (word) {
@@ -44,7 +50,7 @@ export default class Answers {
 				</div>
 				<input
 					class="words-whole-vector__send"
-					data-id="${vector}"
+					data-idx="${vector}"
 					type="button"
 					value="Отправить весь вектор"
 				/>
@@ -90,6 +96,7 @@ export default class Answers {
 	}
 
 	bindSendClick(itemsEl) {
+		console.log('bindSendClick');
 		itemsEl.find('.words__send').bind('click', (e) => {
 
 			const buttonEl = $(e.currentTarget);
@@ -102,6 +109,16 @@ export default class Answers {
 
 			this.send(wordId);
 		});
+	}
+
+	bindSendVectorClick(vectorEl) {
+		console.log('bindSendVectorClick');
+		vectorEl.bind('click', (e) => {
+			const buttonEl = $(e.currentTarget);
+			const vectorIdx = buttonEl.data('idx');
+			console.log(vectorIdx);
+			this.sendVector(vectorIdx);
+		})
 	}
 
 	genListMarkup() {
@@ -141,6 +158,6 @@ export default class Answers {
 		});
 
 		this.bindSendClick(this.listEl.find('.words__item'));
-		this.bindSendClick(this.listEl.find('.words__item'));
+		this.bindSendVectorClick(this.listEl.find('.words-whole-vector__send'));
 	}
 }
