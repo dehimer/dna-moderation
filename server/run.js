@@ -98,7 +98,7 @@ const syncAll = (socket) => {
 	});
 };
 
-newWordEmit = function (newWord) {
+newWordEmit = function () {
 	// io.emit('words:new', newWord);
 	syncAll(io);
 };
@@ -115,20 +115,33 @@ io.on('connection', (socket) => {
 		// });
 	});
 
+	socket.on('vector:send', (vector) => {
+		console.log('vector:send '+vector);
+		wordsDb.find({ vector: vector+'' }).sort({ ts: -1 }).exec((err, words) => {
+			console.log('words');
+			console.log(words);
+
+			request(config.targethost+'?message='+encodeURIComponent(words.map(w => w.word).join(' '))+'&vector='+vector, function (error, response) {
+				console.log(response.statusCode);
+				console.log('error');
+				console.log(error);
+			});
+		});
+	});
+
 	socket.on('word:send', (wordId) => {
 		console.log('words:send '+wordId);
 		wordsDb.findOne({ _id: wordId }, (err, { word, vector }) => {
 			console.log('word');
 			console.log(word);
+			console.log('vector');
+			console.log(vector);
 
 
 			request(config.targethost+'?message='+encodeURIComponent(word)+'&vector='+vector, function (error, response) {
 				console.log(response.statusCode);
 				console.log('error');
 				console.log(error);
-				// if (!error && response.statusCode == 200) {
-				// 	send();
-				// }
 			});
 		})
 	});

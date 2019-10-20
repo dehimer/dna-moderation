@@ -27,7 +27,7 @@ export default class Answers {
 
 	send(id) {
 		console.log(`send ${id}`);
-		this.can.emit('server:send', { message: 'words:send', data: id });
+		this.can.emit('server:send', { message: 'word:send', data: id });
 	}
 
 	sendVector(idx) {
@@ -76,7 +76,7 @@ export default class Answers {
 		const time = hour+':'+minute;
 
 		return `
-			<div class="words__item" data-id="${_id}">
+			<div class="words__item">
 				<div class="words__item-time" >
 					${time}
 				</div>
@@ -87,6 +87,7 @@ export default class Answers {
 					${vector}
 				</div>
 				<input
+				 	data-id="${_id}"
 					class="words__send"
 					type="button"
 					value="Отправить"
@@ -97,15 +98,9 @@ export default class Answers {
 
 	bindSendClick(itemsEl) {
 		console.log('bindSendClick');
-		itemsEl.find('.words__send').bind('click', (e) => {
-
+		itemsEl.bind('click', (e) => {
 			const buttonEl = $(e.currentTarget);
-			if(buttonEl.hasClass('words__send--blocked')){
-				return;
-			}
-
-			const itemEl = buttonEl.closest('.words__item');
-			const wordId = itemEl.data('id');
+			const wordId = buttonEl.data('id');
 
 			this.send(wordId);
 		});
@@ -157,7 +152,7 @@ export default class Answers {
 			scrollbars: true
 		});
 
-		this.bindSendClick(this.listEl.find('.words__item'));
+		this.bindSendClick(this.listEl.find('.words__send'));
 		this.bindSendVectorClick(this.listEl.find('.words-whole-vector__send'));
 	}
 }
