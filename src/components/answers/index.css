@@ -89,3 +89,57 @@
 	color: white;
 	pointer-events: none;
 }
+
+
+.edit-word-form-wrapper {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+
+	background-color: rgba(0,0,0,0.9);
+}
+
+.edit-word-form {
+	width: 80vw;
+}
+
+.edit-word-form__input-wrapper {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 20px;
+}
+
+.edit-word-form__input {
+	width: 100vw;
+	padding: 10px;
+	font-size: 20px;
+	font-family: Circe-Light, serif;
+	color: white;
+	background-color: rgba(255,255,255,0.1);
+	border: 1px solid rgba(255,255,255,0.3);
+	box-sizing: border-box;
+}
+
+.edit-word-form__submit {
+	width: 150px;
+	max-width: 150px;
+	font-size: 20px;
+	border-radius: 20px;
+	padding: 5px;
+	font-family: Circe-Regular, serif;
+	text-transform: uppercase;
+	background: linear-gradient(45deg, #489c9a, #f2cf37);
+	color: white;
+	border: none;
+	box-sizing: border-box;
+}
+
+.edit-word-form__submit[disabled] {
+	opacity: 0.5;
+}

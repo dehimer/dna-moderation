@@ -151,16 +151,15 @@ io.on('connection', (socket) => {
 		})
 	});
 
-	socket.on('word:update', (wordId, word) => {
-		console.log('words:update ' + wordId);
+	socket.on('word:update', (word) => {
+		console.log('words:update');
 		console.log(word);
 
-		wordsDb.updateOne({ _id: wordId }, (err, updateResult) => {
+		wordsDb.update({ _id: word._id }, { word: word.word, vector: word.vector }, {}, (err, updateResult) => {
 			console.log('updateResult');
 			console.log(updateResult);
 
-
-			// socket.emit('word:updated', )
+			syncAll(io);
 		})
 	});
 });

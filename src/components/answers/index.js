@@ -127,6 +127,9 @@ export default class Answers {
 			const buttonEl = $(e.currentTarget);
 			const wordId = buttonEl.data('id');
 			console.log(`edit ${wordId} word`);
+
+			const word = this.words.find(w => w._id === wordId);
+			this.createEditForm(word);
 		})
 	}
 
@@ -141,6 +144,68 @@ export default class Answers {
 				return this.genItemMarkup(word);
 			}
 		}).join('');
+	}
+
+	createEditForm(word) {
+		console.log('createEditForm');
+		console.log(word);
+		const markup = `
+			<div class="edit-word-form-wrapper">
+				<div class="edit-word-form">
+					<div class="edit-word-form__input-wrapper">
+						<input class="edit-word-form__input word" type="text" placeholder="Слово" value="${word.word}"/>
+					</div>
+					<div class="edit-word-form__input-wrapper">
+						<input class="edit-word-form__input vector" type="number" min="0" max="10" placeholder="Вектор (0-10)" value="${word.vector}" />
+					</div>
+					<div class="edit-word-form__input-wrapper">
+						<input class="edit-word-form__submit" type="button" value="Сохранить" />
+					</div>
+				</div>
+			</div>
+		`;
+		this.rootEl.append(markup);
+
+		const formWrapperEl = this.rootEl.find('.edit-word-form-wrapper');
+		const formEl = formWrapperEl.find('.edit-word-form');
+
+		const wordEl = formEl.find('.edit-word-form__input.word');
+		const vectorEl = formEl.find('.edit-word-form__input.vector');
+		const submitEl = formEl.find('.edit-word-form__submit');
+
+		formWrapperEl.bind('click', () => {
+			formWrapperEl.remove();
+		});
+
+		formEl.bind('click', (e) => {
+			e.stopPropagation();
+		});
+
+		formEl.keyup(() => {
+			const word = wordEl.val();
+			const vector = vectorEl.val();
+
+			const disabled = !word || vector === '' || isNaN(vector*1) || vector > 10 || vector < 0;
+
+			submitEl.prop('disabled', disabled);
+		});
+
+		formEl.find('.edit-word-form__submit').bind('click', (e) => {
+			e.stopPropagation();
+			console.log('save');
+
+			const data = {
+				_id: word._id,
+				word: wordEl.val(),
+				vector: vectorEl.val()
+			};
+
+			console.log(data);
+
+			this.can.emit('server:send', { message: 'word:update', data });
+
+			formWrapperEl.remove();
+		});
 	}
 
 	render() {
