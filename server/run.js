@@ -109,10 +109,6 @@ io.on('connection', (socket) => {
 	socket.on('words:all', () => {
 		console.log('words:all');
 		syncAll(socket);
-
-		// asnwersCollection.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
-		// 	socket.emit('answers:all', allAnswers);
-		// });
 	});
 
 	socket.on('vector:send', (vector) => {
@@ -155,17 +151,37 @@ io.on('connection', (socket) => {
 		console.log('words:update');
 		console.log(word);
 
+		const words = word.word.split(' ').filter(w => w).map((t) => ({
+			ts: +(new Date()),
+			word: t,
+			vector: word.vector,
+		}));
+
+		console.log('words');
+		console.log(words);
+
+		const [currentWord, ...newWords] = words;
+		console.log('currentWord');
+		console.log(currentWord);
+		console.log('newWords');
+		console.log(newWords);
+		const newWordsExists = newWords && newWords.length;
+		console.log('newWordsExists');
+		console.log(newWordsExists);
+
 		wordsDb.update({
 			_id: word._id
-		}, {
-			ts: +(new Date()),
-			word: word.word,
-			vector: word.vector
-		}, {}, (err, updateResult) => {
+		}, currentWord, {}, (err, updateResult) => {
 			console.log('updateResult');
 			console.log(updateResult);
 
-			syncAll(io);
-		})
+			if (!newWordsExists) syncAll(io);
+		});
+
+		if (newWordsExists) {
+			wordsDb.insert(newWords, () => {
+				syncAll(io);
+			})
+		}
 	});
 });
