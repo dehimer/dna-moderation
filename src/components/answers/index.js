@@ -11,12 +11,10 @@ export default class Answers {
 		this.can.emit('server:send', { message: 'words:all' });
 
 		this.can.on('words:all', (words=[]) => {
-			console.log('words:all');
-			console.log(words);
 			this.words = words;
 			this.render();
 
-			setTimeout(function () {
+			setTimeout(() => {
 				window.scrollTo(0,0 );
 			}, 100);
 		});
@@ -36,6 +34,22 @@ export default class Answers {
 		this.listEl.prepend(this.genItemMarkup(word));
 		this.bindSendClick(this.listEl.find(`.words__item[data-id="${word._id}"]`));
 		this.iscroll.refresh();
+	}
+
+	genHeaderMarkup(vector) {
+		return `
+			<div class="words__header">
+				<div class="words__header-name">
+					${vector}
+				</div>
+				<input
+					class="words-whole-vector__send"
+					data-id="${vector}"
+					type="button"
+					value="Отправить весь вектор"
+				/>
+			</div>
+		`
 	}
 
 	genItemMarkup(word) {
@@ -90,31 +104,43 @@ export default class Answers {
 		});
 	}
 
-	render() {
-		const wordsMarkup = this.words.map(word => {
-			return this.genItemMarkup(word)
+	genListMarkup() {
+		let currentVector;
+		return this.words.map((word) => {
+			console.log(word);
+			if (currentVector !== word.vector) {
+				currentVector = word.vector;
+				return this.genHeaderMarkup(word.vector) + this.genItemMarkup(word);
+			} else {
+				return this.genItemMarkup(word);
+			}
 		}).join('');
+	}
 
+	render() {
 		const markup = `
 			<div class='words'>
 				<div style="height:100vh; overflow:hidden;">
 					<div class='words__list'>
-						${wordsMarkup}
+						${this.genListMarkup()}
 					</div>
 				</div>
 			</div>
 		`;
 
+		this.rootEl.find('.words').remove();
 		this.rootEl.append(markup);
 
 		this.blockEl = this.rootEl.find('.words');
 		this.listEl = this.blockEl.find('.words__list');
 
+		this.iscroll && this.iscroll.destroy();
 		this.iscroll = new IScroll(this.listEl.parent()[0], {
 			mouseWheel: true,
 			scrollbars: true
 		});
 
+		this.bindSendClick(this.listEl.find('.words__item'));
 		this.bindSendClick(this.listEl.find('.words__item'));
 	}
 }

@@ -64,12 +64,7 @@ app.post(/^\/word/, (req, res) => {
 			vector
 		}));
 
-		console.log('newWords:');
-		console.log(newWords);
-
 		wordsDb.insert(newWords, (err, insertedWords) => {
-			console.log('insertedWords');
-			console.log(insertedWords);
 			res.send('wordsReceived');
 			for (const insertedWord of insertedWords) {
 				newWordEmit(insertedWord);
@@ -94,8 +89,18 @@ server.listen(PORT);
 
 
 const io = require('socket.io')(server);
+
+const syncAll = (socket) => {
+	wordsDb.find({}).sort({ vector: 1, ts: -1 }).exec((err, allWords) => {
+		console.log('allWords');
+		console.log(allWords);
+		socket.emit('words:all', allWords || []);
+	});
+};
+
 newWordEmit = function (newWord) {
-	io.emit('words:new', newWord);
+	// io.emit('words:new', newWord);
+	syncAll(io);
 };
 
 io.on('connection', (socket) => {
@@ -103,11 +108,7 @@ io.on('connection', (socket) => {
 
 	socket.on('words:all', () => {
 		console.log('words:all');
-		wordsDb.find({}).sort({ ts: -1 }).exec((err, allWords) => {
-			console.log('allWords');
-			console.log(allWords);
-			socket.emit('words:all', allWords || []);
-		});
+		syncAll(socket);
 
 		// asnwersCollection.find({}).sort({ id: -1 }).exec((err, allAnswers) => {
 		// 	socket.emit('answers:all', allAnswers);
@@ -130,5 +131,18 @@ io.on('connection', (socket) => {
 				// }
 			});
 		})
-	})
+	});
+
+	socket.on('word:update', (wordId, word) => {
+		console.log('words:update ' + wordId);
+		console.log(word);
+
+		wordsDb.updateOne({ _id: wordId }, (err, updateResult) => {
+			console.log('updateResult');
+			console.log(updateResult);
+
+
+			// socket.emit('word:updated', )
+		})
+	});
 });
