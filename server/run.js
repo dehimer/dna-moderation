@@ -58,17 +58,15 @@ app.post(/^\/word/, (req, res) => {
 	const { word, vector } = req.query;
 
 	if (word && !isNaN(vector*1)) {
-		const newWords = word.split(' ').filter(w => w).map((word) => ({
+		const newWord = {
 			ts: +(new Date()),
 			word,
 			vector
-		}));
+		};
 
-		wordsDb.insert(newWords, (err, insertedWords) => {
+		wordsDb.insert(newWord, (err) => {
 			res.send('wordsReceived');
-			for (const insertedWord of insertedWords) {
-				newWordEmit(insertedWord);
-			}
+			newWordEmit(newWord);
 		})
 	}
 });
@@ -117,7 +115,7 @@ io.on('connection', (socket) => {
 			console.log('words');
 			console.log(words);
 
-			request(config.targethost+'?message='+encodeURIComponent(words.map(w => w.word).join(' '))+'&vector='+vector, function (error, response) {
+			request(config.targethost+'?message='+encodeURIComponent(words.map(w => w.word).join(' '))+'&layerindex='+vector, function (error, response) {
 				if (error) {
 					console.log('error');
 					console.log(error);
@@ -131,12 +129,7 @@ io.on('connection', (socket) => {
 	socket.on('word:send', (wordId) => {
 		console.log('words:send '+wordId);
 		wordsDb.findOne({ _id: wordId }, (err, { word, vector }) => {
-			console.log('word');
-			console.log(word);
-			console.log('vector');
-			console.log(vector);
-
-			request(config.targethost+'?message='+encodeURIComponent(word)+'&vector='+vector, function (error, response) {
+			request(config.targethost+'?message='+encodeURIComponent(word)+'&layerindex='+vector, function (error, response) {
 				if (error) {
 					console.log('error');
 					console.log(error);
@@ -148,40 +141,19 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('word:update', (word) => {
-		console.log('words:update');
-		console.log(word);
-
-		const words = word.word.split(' ').filter(w => w).map((t) => ({
+		const updateWord = {
 			ts: +(new Date()),
-			word: t,
+			word: word.word,
 			vector: word.vector,
-		}));
-
-		console.log('words');
-		console.log(words);
-
-		const [currentWord, ...newWords] = words;
-		console.log('currentWord');
-		console.log(currentWord);
-		console.log('newWords');
-		console.log(newWords);
-		const newWordsExists = newWords && newWords.length;
-		console.log('newWordsExists');
-		console.log(newWordsExists);
+		};
 
 		wordsDb.update({
 			_id: word._id
-		}, currentWord, {}, (err, updateResult) => {
+		}, updateWord, {}, (err, updateResult) => {
 			console.log('updateResult');
 			console.log(updateResult);
 
-			if (!newWordsExists) syncAll(io);
+			syncAll(io);
 		});
-
-		if (newWordsExists) {
-			wordsDb.insert(newWords, () => {
-				syncAll(io);
-			})
-		}
 	});
 });
