@@ -46,7 +46,7 @@ export default class Question {
 					<input class="question-form__input word" type="text" placeholder="Слово" />
 				</div>
 				<div class="question-form__input-wrapper">
-					<input class="question-form__input vector" type="number" min="0" max="10" placeholder="Вектор (0-10)" />
+					<input class="question-form__input vector" type="number" min="0" max="9" placeholder="Вектор (0-9)" />
 				</div>
 				<div class="question-form__input-wrapper">
 					<input class="question-form__submit" disabled type="button" value="Отправить" />
@@ -73,7 +73,7 @@ export default class Question {
 			const word = this.wordEl.val();
 			const vector = this.vectorEl.val();
 
-			const disabled = !word || vector === '' || isNaN(vector*1) || vector > 10 || vector < 0;
+			const disabled = !word || vector === '' || isNaN(vector*1) || vector >= 10 || vector < 0;
 
 			this.submitEl.prop('disabled', disabled);
 		});

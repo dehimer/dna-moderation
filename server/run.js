@@ -114,12 +114,14 @@ io.on('connection', (socket) => {
 		wordsDb.find({ vector: vector+'' }).sort({ ts: -1 }).exec((err, words) => {
 			console.log('words');
 			console.log(words);
+			const url = `${config.targethost}?message=${encodeURIComponent(words.map(w => w.word).join(' '))}&layerindex=${vector}`;
 
-			request(config.targethost+'?message='+encodeURIComponent(words.map(w => w.word).join(' '))+'&layerindex='+vector, function (error, response) {
+			request(url, function (error, response) {
 				if (error) {
 					console.log('error');
 					console.log(error);
 				} else if (response.statusCode) {
+					console.log(response);
 					console.log(response.statusCode);
 				}
 			});
@@ -127,13 +129,16 @@ io.on('connection', (socket) => {
 	});
 
 	socket.on('word:send', (wordId) => {
-		console.log('words:send '+wordId);
+		console.log('word:send '+wordId);
 		wordsDb.findOne({ _id: wordId }, (err, { word, vector }) => {
-			request(config.targethost+'?message='+encodeURIComponent(word)+'&layerindex='+vector, function (error, response) {
+			const url = `${config.targethost}?message=${encodeURIComponent(word)}&layerindex=${vector}`;
+
+			request(url, function (error, response) {
 				if (error) {
 					console.log('error');
 					console.log(error);
 				} else if (response.statusCode) {
+					console.log(response);
 					console.log(response.statusCode);
 				}
 			});

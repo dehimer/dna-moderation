@@ -156,7 +156,7 @@ export default class Answers {
 						<input class="edit-word-form__input word" type="text" placeholder="Слово" value="${word.word}"/>
 					</div>
 					<div class="edit-word-form__input-wrapper">
-						<input class="edit-word-form__input vector" type="number" min="0" max="10" placeholder="Вектор (0-10)" value="${word.vector}" />
+						<input class="edit-word-form__input vector" type="number" min="0" max="9" placeholder="Вектор (0-9)" value="${word.vector}" />
 					</div>
 					<div class="edit-word-form__input-wrapper">
 						<input class="edit-word-form__submit" type="button" value="Сохранить" />
@@ -185,7 +185,7 @@ export default class Answers {
 			const word = wordEl.val();
 			const vector = vectorEl.val();
 
-			const disabled = !word || vector === '' || isNaN(vector*1) || vector > 10 || vector < 0;
+			const disabled = !word || vector === '' || isNaN(vector*1) || vector >= 10 || vector < 0;
 
 			submitEl.prop('disabled', disabled);
 		});
