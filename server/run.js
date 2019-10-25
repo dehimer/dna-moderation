@@ -112,19 +112,33 @@ io.on('connection', (socket) => {
 	socket.on('vector:send', (vector) => {
 		console.log('vector:send '+vector);
 		wordsDb.find({ vector: vector+'' }).sort({ ts: -1 }).exec((err, words) => {
-			console.log('words');
-			console.log(words);
-			const url = `${config.targethost}?message=${encodeURIComponent(words.map(w => w.word).join(' '))}&layerindex=${vector}`;
+			if (err) return console.error(err);
 
-			request(url, function (error, response) {
-				if (error) {
-					console.log('error');
-					console.log(error);
-				} else if (response.statusCode) {
-					console.log(response);
-					console.log(response.statusCode);
+			const wordsToSend = words.map(w => w.word);
+			console.log(`wordsToSend of ${vector} vector`);
+			console.log(wordsToSend);
+
+			const send = () => {
+				const word = wordsToSend.shift();
+				const url = `${config.targethost}?message=${encodeURIComponent(word)}&layerindex=${vector}`;
+				console.log(`req: ${url}`);
+				request(url, function (error, response) {
+					console.log(`res: ${url}`);
+					if (error) {
+						console.log('error');
+						console.log(error);
+					} else if (response.statusCode) {
+						console.log(response);
+						console.log(response.statusCode);
+					}
+				});
+
+				if (wordsToSend.length) {
+					setTimeout(() => send(), config.requestsDelay || 1000);
 				}
-			});
+			};
+
+			send();
 		});
 	});
 
@@ -132,8 +146,9 @@ io.on('connection', (socket) => {
 		console.log('word:send '+wordId);
 		wordsDb.findOne({ _id: wordId }, (err, { word, vector }) => {
 			const url = `${config.targethost}?message=${encodeURIComponent(word)}&layerindex=${vector}`;
-
+			console.log(`req: ${url}`);
 			request(url, function (error, response) {
+				console.log(`res: ${url}`);
 				if (error) {
 					console.log('error');
 					console.log(error);
